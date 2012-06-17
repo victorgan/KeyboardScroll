@@ -45,9 +45,9 @@ Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.p
 Future Improvements
 -------------------
 This plugin was created specifically to scroll up and down through images, with
-the selected image centered on screen. It can easily be generalized. Here are
+the selected image centered on screen. It can easily be more generalized. Here are
 some potential improvements:
-- Remove the dependency of jQuery.scrollTo
-- Generalize it to including scrolling left/right
+- Phase out the dependency of jQuery.scrollTo
+- Generalize it to include left/right scrolling
 - Add an option to align the elements to the top of the screen instead of
   centered
