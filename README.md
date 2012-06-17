@@ -9,8 +9,8 @@ Project home: https://github.com/victorgan/KeyboardScroll
 Dependencies
 ------------
 This plugin requires the following javascript files:
- -jQuery (version 1.7.2)
- -jQuery.scrollTo (version 1.4.2) (uses scrollTo function)
+- jQuery (version 1.7.2)
+- jQuery.scrollTo (version 1.4.2) 
 
 Examples
 --------
@@ -41,3 +41,13 @@ Licensing
 Feel free to use this for pretty much any purpose.
 
 Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+
+Future Improvements
+-------------------
+This plugin was created specifically to scroll up and down through images, with
+the selected image centered on screen. It can easily be generalized. Here are
+some potential improvements:
+- Remove the dependency of jQuery.scrollTo
+- Generalize it to including scrolling left/right
+- Add an option to align the elements to the top of the screen instead of
+  centered
