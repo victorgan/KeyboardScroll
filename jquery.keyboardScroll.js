@@ -1,20 +1,13 @@
 // Keyboard Scroll
 // ===============
 // A jQuery plugin to scroll up and down through elements by typing a key
-//
-// Requires the following javascript files:
-//  -jQuery (version 1.7.2)
-//  -jQuery.scrollTo (version 1.4.2) (uses scrollTo function)
-//
+// Requires: jQuery version 1.7.2
 // Copyright (C) 2012 Victor Gan - victorgan@gmail.com - vgan.ca
 //
 // Licensed under the MIT license:
 //   http://www.opensource.org/licenses/mit-license.php
 //
-// Project home:
-//   http://vgan.ca/projects/keyboardscroll
-//
-// Version:  1.0 - June 16, 2012
+// Project home: https://github.com/victorgan/KeyboardScroll
 //
 // Examples :
 // 1. To allow scrolling through images with class 'photo' using keys 'j' and 
@@ -51,7 +44,29 @@
 		    $('html,body').animate({ scrollTop: coordinate }, scrollDuration);
         } //scrollTo
 
+        function scrollToMiddle(scrolledElement, scrollDuration) {
+            var offset = $(window).height() / 2 - scrolledElement.height() / 2;
+            var middleOfElement = scrolledElement.offset().top - offset;
+            scrollTo(middleOfElement, scrollDuration);
+        }//scrollToMiddle
+
         function isMiddleElement() {
+            // Returns true if 'this' is the most middle element on the screen.
+            // All elements must be the same height.
+            // True for element2, false for element1 and element3:
+            // ---------------  <- topFold
+            // |              |           
+            // |   --------   |           
+            // |  |element1|  |           
+            // |   --------   |           
+            // |              | <- topLimit           
+            // |   --------   |     <- topOfElement
+            // |  |element2|  | <- bottomLimit          
+            // |   --------   |     <- bottomOfElement
+            // |              |           
+            // |   --------   |
+            // |  |element3|  |
+            // ---------------  <- bottomFold
             var topFold = $(window).scrollTop();
             var bottomFold = topFold + $(window).height();
             var topOfElement = $(this).offset().top;
@@ -70,42 +85,41 @@
         var upKeyCode = settings.upKeyCode;
         $(document).keydown(function (evt) {
 
-            var onScreenElement = elements.filter(isMiddleElement).first();
+            var element = elements.filter(isMiddleElement).first();
             if ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode) &&
-                onScreenElement.length) {
+                element.length) {
 
                 var topFold = $(window).scrollTop();
                 var bottomFold = topFold + $(window).height();
-                var topOfElement = onScreenElement.offset().top;
-                var elementHeight = onScreenElement.height();
+                var topOfElement = element.offset().top;
+                var topLimit = Math.floor((topFold + bottomFold) / 2 - element.height() / 2);
 
-                var topLimit = Math.floor((topFold + bottomFold) / 2 - elementHeight / 2);
-                var bottomLimit = Math.ceil((topFold + bottomFold) / 2 + elementHeight / 2);
-
-                var scrolledImage;
+                var scrolledElement;
+                var tolerence = 5; //for innacurate topFold/bottomFold values
                 if (evt.keyCode === downKeyCode) { 
-                    if ( topOfElement > (topLimit + 5)) {
-                        scrolledImage = onScreenElement;
+                    if ( topOfElement > (topLimit + tolerence)) {
+                        scrolledElement = element;
                     }
-                    else {
-                        scrolledImage = onScreenElement.next(elements);
+                    else if (!element.is(elements.last())){
+                        scrolledElement = element.next(elements);
                     }
                 }
                 else if (evt.keyCode === upKeyCode) { 
-                    if ( topOfElement < (topLimit - 5)) {
-                        scrolledImage = onScreenElement;
+                    if ( topOfElement < (topLimit - tolerence)) {
+                        scrolledElement = element;
                     }
-                    else {
-                        scrolledImage = onScreenElement.prev(elements);
+                    else if (!element.is(elements.first())){
+                        scrolledElement = element.prev(elements);
                     }
                 }
-                
-                if ( scrolledImage.attr('src') ) {
-                    var scrolloffset = $(window).height() / 2 - elementHeight / 2;
-                    var scrollDuration = settings.scrollDuration;
-                    scrollTo(scrolledImage.offset().top - scrolloffset, scrollDuration);
+
+                if (scrolledElement.length) {
+                    scrollToMiddle(scrolledElement, settings.scrollDuration) 
                 }
-            } // if ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode).. 
+            } // if ((evt.keyCode... 
+            else if (evt.keyCode === downKeyCode && elements.first().length) {
+                scrollToMiddle(elements.first(), settings.scrollDuration) 
+            } 
             
         }); // $(document).keydown(function (evt) 
 
