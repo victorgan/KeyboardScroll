@@ -120,6 +120,9 @@
             else if (evt.keyCode === downKeyCode && elements.first().length) {
                 scrollToMiddle(elements.first(), settings.scrollDuration) 
             } 
+            else if (evt.keyCode === upKeyCode && elements.last().length) {
+                scrollToMiddle(elements.last(), settings.scrollDuration) 
+            } 
             
         }); // $(document).keydown(function (evt) 
 
