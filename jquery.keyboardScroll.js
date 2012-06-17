@@ -47,18 +47,6 @@
         };
         $.extend(settings, options);
 
-        //returns true if the element can be seen in the window.
-        function isVisible() {
-            var topFold = $(window).scrollTop();
-            var bottomFold = topFold + $(window).height();
-            var topOfElement = $(this).offset().top;
-            var bottomOfElement = topOfElement + $(this).height();
-            if (bottomOfElement >= topFold && topOfElement < bottomFold)
-                return true;
-            else 
-                return false; 
-        } // function isVisible()
-
         function isMiddleElement() {
             var topFold = $(window).scrollTop();
             var bottomFold = topFold + $(window).height();
@@ -72,7 +60,7 @@
                 return true;
             else 
                 return false; 
-        } // function isVisible()
+        } // function isMiddleElement() 
 
         var downKeyCode = settings.downKeyCode;
         var upKeyCode = settings.upKeyCode;
