@@ -47,6 +47,10 @@
         };
         $.extend(settings, options);
 
+        function scrollTo(coordinate, scrollDuration) {
+		    $('html,body').animate({ scrollTop: coordinate }, scrollDuration);
+        } //scrollTo
+
         function isMiddleElement() {
             var topFold = $(window).scrollTop();
             var bottomFold = topFold + $(window).height();
@@ -99,7 +103,7 @@
                 if ( scrolledImage.attr('src') ) {
                     var scrolloffset = $(window).height() / 2 - elementHeight / 2;
                     var scrollDuration = settings.scrollDuration;
-                    $.scrollTo(scrolledImage, scrollDuration, {offset: -scrolloffset});
+                    scrollTo(scrolledImage.offset().top - scrolloffset, scrollDuration);
                 }
             } // if ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode).. 
             
