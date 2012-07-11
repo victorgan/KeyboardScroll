@@ -61,11 +61,11 @@
                 return false; 
         } // isMiddleElement() 
 
+        var elements = this;
         $(document).keydown(function (evt) {
 
             var downKeyCode = settings.downKeyCode;
             var upKeyCode = settings.upKeyCode;
-            var elements = this;
             var element = elements.filter(isMiddleElement).first();
             if ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode) &&
                 element.length) {
