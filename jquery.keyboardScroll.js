@@ -7,32 +7,11 @@
 // Licensed under the MIT license:
 //   http://www.opensource.org/licenses/mit-license.php
 //
-// Project home: https://github.com/victorgan/KeyboardScroll
-//
-// Examples :
-// 1. To allow scrolling through images with class 'photo' using keys 'j' and 
-// 'k' (default), include the following in your HTML page:
-//     <script type="text/javascript" charset="utf-8">
-//       $(function() {
-//               $("img.photo").keyboardScroll();
-//       });
-//     </script>
-// 2. To allow scrolling through divs with class 'section' using the down and
-// up arrow, include the following in your HTMl page:
-//     <script type="text/javascript" charset="utf-8">
-//       $(function() {
-//               $("div.section").keyboardScroll(
-//               {
-//                 downKeyCode     : 40,   // 'down arrow'
-//                 upKeyCode       : 38,   // 'up arrow'
-//               });
-//       });
-//     </script>
+// Project home: vgan.ca/projects/keyboardscroll.html
 
 (function ($) {
     $.fn.keyboardScroll = function (options) {
  
-        var elements = this;
         var settings = {
             downKeyCode     : 74,   // 'j'
             upKeyCode       : 75,   // 'k'
@@ -42,16 +21,17 @@
 
         function scrollTo(coordinate, scrollDuration) {
 		    $('html,body').animate({ scrollTop: coordinate }, scrollDuration);
-        } //scrollTo
+        } // scrollTo
 
         function scrollToMiddle(scrolledElement, scrollDuration) {
             var offset = $(window).height() / 2 - scrolledElement.height() / 2;
             var middleOfElement = scrolledElement.offset().top - offset;
             scrollTo(middleOfElement, scrollDuration);
-        }//scrollToMiddle
+        } // scrollToMiddle
 
         function isMiddleElement() {
             // Returns true if 'this' is the most middle element on the screen.
+            // Space between elements must not exceed the heigt of the element.
             // All elements must be the same height.
             // True for element2, false for element1 and element3:
             // ---------------  <- topFold
@@ -79,12 +59,13 @@
                 return true;
             else 
                 return false; 
-        } // function isMiddleElement() 
+        } // isMiddleElement() 
 
-        var downKeyCode = settings.downKeyCode;
-        var upKeyCode = settings.upKeyCode;
         $(document).keydown(function (evt) {
 
+            var downKeyCode = settings.downKeyCode;
+            var upKeyCode = settings.upKeyCode;
+            var elements = this;
             var element = elements.filter(isMiddleElement).first();
             if ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode) &&
                 element.length) {
@@ -117,13 +98,14 @@
                     }
                 } // else if (evt.keyCode === upKeyCode) 
 
-            } // if ((evt.keyCode... 
+            } // ((evt.keyCode === downKeyCode || evt.keyCode === upKeyCode) && element.length) 
             else if (evt.keyCode === downKeyCode && elements.first().length) {
                 scrollToMiddle(elements.first(), settings.scrollDuration) 
             } 
             else if (evt.keyCode === upKeyCode && elements.last().length) {
                 scrollToMiddle(elements.last(), settings.scrollDuration) 
             } 
+            // else do nothing
             
         }); // $(document).keydown(function (evt) 
 
