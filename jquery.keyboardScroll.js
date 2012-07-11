@@ -99,23 +99,24 @@
                 if (evt.keyCode === downKeyCode) { 
                     if ( topOfElement > (topLimit + tolerence)) {
                         scrolledElement = element;
+                        scrollToMiddle(scrolledElement, settings.scrollDuration) 
                     }
                     else if (!element.is(elements.last())){
                         scrolledElement = element.next(elements);
+                        scrollToMiddle(scrolledElement, settings.scrollDuration) 
                     }
-                }
+                } // if (evt.keyCode === downKeyCode) 
                 else if (evt.keyCode === upKeyCode) { 
                     if ( topOfElement < (topLimit - tolerence)) {
                         scrolledElement = element;
+                        scrollToMiddle(scrolledElement, settings.scrollDuration) 
                     }
                     else if (!element.is(elements.first())){
                         scrolledElement = element.prev(elements);
+                        scrollToMiddle(scrolledElement, settings.scrollDuration) 
                     }
-                }
+                } // else if (evt.keyCode === upKeyCode) 
 
-                if (scrolledElement.length) {
-                    scrollToMiddle(scrolledElement, settings.scrollDuration) 
-                }
             } // if ((evt.keyCode... 
             else if (evt.keyCode === downKeyCode && elements.first().length) {
                 scrollToMiddle(elements.first(), settings.scrollDuration) 
